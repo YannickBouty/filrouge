@@ -1,0 +1,189 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Dans le cadre du MS SIO à CentraleSupelec, les étudiants doivent réaliser un projet fil rouge où ils doivent mettre en oeuvre plusieurs disciplines. Ce service propose de déposer des fichiers de différents formats et d'en retourner les métadonnées au format JSON.",
+    "version": "1.0.0",
+    "title": "Yannick Bouty : fil rouge",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "MOE",
+      "email": "filrouge@cs.fr"
+    },
+    "license": {
+      "name": "CentraleSupelec - MS SIO",
+      "url": "http://www.mastere-sio.ecp.fr"
+    }
+  },
+  "externalDocs": {
+    "description": "Plus d'informations sur Swagger",
+    "url": "http://swagger.io"
+  },
+  "host": "0.0.0.0:8000",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "BasicAuthentification": {
+      "type": "basic"
+    }
+  },
+  "tags": [
+    {
+      "name": "bienvenue"
+    },
+    {
+      "name": "fichier",
+      "description": "tout sur le dépôt de fichier"
+    }
+  ],
+  "paths": {
+    "/bienvenue": {
+      "get": {
+        "tags": [
+          "bienvenue"
+        ],
+        "summary": "page de bienvenue",
+        "description": "",
+        "operationId": "bienvenue",
+        "responses": {
+          "200": {
+            "description": "Opération réalisée avec succès",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "401": {
+            "description": "Accès refusé",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "404": {
+            "description": "Ressource non trouvée",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "413": {
+            "description": "Taille du fichier trop grande",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "500": {
+            "description": "Erreur interne du serveur",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/uploadfile": {
+      "post": {
+        "tags": [
+          "fichier"
+        ],
+        "summary": "Dépôt d'un fichier",
+        "description": "",
+        "operationId": "uploadfile",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "monFichier",
+            "in": "formData",
+            "description": "Fichier à déposer",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Opération réalisée avec succès",
+            "schema": {
+              "$ref": "#/definitions/Metadata"
+            }
+          },
+          "401": {
+            "description": "Accès refusé",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "404": {
+            "description": "Ressource non trouvée",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "413": {
+            "description": "Taille du fichier trop grande",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "500": {
+            "description": "Erreur interne du serveur",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuthentification": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Metadata": {
+      "type": "object",
+      "properties": {
+        "precision": {
+          "type": "string"
+        },
+        "nom_fichier": {
+          "type": "string"
+        },
+        "extension": {
+          "type": "string"
+        },
+        "mime_type": {
+          "type": "string"
+        },
+        "taille": {
+          "type": "integer",
+          "description": "en octects"
+        },
+        "contenu": {
+          "type": "string",
+          "description": "suivant le fichier il s'agit de données brutes ou encodées en base64"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
