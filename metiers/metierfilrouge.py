@@ -24,7 +24,7 @@ def contruire_retour(precision, nom_fichier, extension, mime_type, taille, conte
     json
     """
     return {'Précision':precision, 'Nom du fichier':nom_fichier, \
-            'extension':extension, 'Mime type':mime_type, \
+            'Extension':extension, 'Mime type':mime_type, \
             'Taille en octets':taille, 'Contenu':contenu}
 
 def generer_json_data_brutes(request):
