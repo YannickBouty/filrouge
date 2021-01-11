@@ -18,7 +18,7 @@
     "description": "Plus d'informations sur Swagger",
     "url": "http://swagger.io"
   },
-  "host": "0.0.0.0:8000",
+  "host": "0.0.0.0:443",
   "schemes": [
     "https"
   ],
