@@ -30,20 +30,20 @@ chmod 744 lancement-serveur-filrouge.sh
 ------------------------------------------
 	SWAGGER
 ------------------------------------------
-Dans votre navigateur tapez l'URL : https://0.0.0.0:8000/swagger 
+Dans votre navigateur tapez l'URL : https://0.0.0.0:55080/swagger 
 
 ------------------------------------------
 	TESTER LES SERVICES
 ------------------------------------------
 Dans une console :
 1/Service opérationnel :
-Dans votre navigateur tapez l'URL : https://0.0.0.0:8000/bienvenue
+Dans votre navigateur tapez l'URL : https://0.0.0.0:55080/bienvenue
 
 2/Test du service d'upload de fichiers :
 Les fichiers autorisés sont les ['csv','gif','jpeg','jpg','md','pdf','png','txt'] de taille max d'5Mo.
 Une authentification est nécessaire avec : username = francoislaissus et password = mssio
 
-Exemple : curl -ki -X POST -u "francoislaissus:mssio" https://0.0.0.0:8000/uploadfile -F 'monFichier=@./fichierstest/data.csv'
+Exemple : curl -ki -X POST -u "francoislaissus:mssio" https://0.0.0.0:55080/uploadfile -F 'monFichier=@./fichierstest/data.csv'
 
 3/Dans le fichier "automatisation-tests-fonctionnels-filrouge.sh", vous trouverez des exemples de tests fonctionnels.
 Vous pouvez l'exécuter avec la commande :
@@ -68,12 +68,13 @@ Architecture MVC (sans les templates ...)
 Tests unitaires
 Qualité de code avec pylint (respect de la PEP)
 Versionning des sources avec GIT et GITHUB
+AWS IAM et CREDENTIALS
+AWS EC2
+AWS S3
+AWS ROUTE 53
+AWS ELASTIC IP
 
 ------------------------------------------
 	AMELIORATIONS
 ------------------------------------------
-PACKET FILTER
-API MANAGEMENT
-IAAS
-
 

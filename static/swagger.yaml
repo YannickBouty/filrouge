@@ -13,7 +13,7 @@ info:
 externalDocs:
   description: "Plus d'informations sur Swagger"
   url: "http://swagger.io"
-host: "0.0.0.0:443"
+host: "0.0.0.0:55080"
 schemes:
 - "https"
 securityDefinitions:

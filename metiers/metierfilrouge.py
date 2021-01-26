@@ -3,10 +3,14 @@ Script métier du projet.
 """
 
 import base64
+import boto3
 from flask import jsonify
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 # pylint: disable=too-many-arguments
+
+BUCKET='storagefilrougeyannick'
 
 def contruire_retour(precision, nom_fichier, extension, mime_type, taille, contenu):
     """
@@ -48,6 +52,7 @@ def generer_json_data_brutes(request):
     taille = request.headers.get('Content-Length')
     nom_fichier = secure_filename(request.files['monFichier'].filename)
     extension = nom_fichier.split(".")[-1].lower()
+    enregistrer_fichier(request)
     return jsonify(contruire_retour(precision, nom_fichier, extension, mime_type, taille, contenu))
 
 def generer_json_data_basesoixantequatre(request):
@@ -72,6 +77,7 @@ def generer_json_data_basesoixantequatre(request):
     taille = request.headers.get('Content-Length')
     nom_fichier = secure_filename(request.files['monFichier'].filename)
     extension = nom_fichier.split(".")[-1].lower()
+    enregistrer_fichier(request)
     return jsonify(contruire_retour(precision, nom_fichier, extension, \
             mime_type, taille, contenu_base_soixantequatre))
 
@@ -96,4 +102,16 @@ def generer_json_vierge(request):
     nom_fichier = secure_filename(request.files['monFichier'].filename)
     extension = nom_fichier.split(".")[-1].lower()
     contenu = ''
+    enregistrer_fichier(request)
     return jsonify(contruire_retour(precision, nom_fichier, extension, mime_type, taille, contenu))
+
+def enregistrer_fichier(request):
+    """
+    Cette fonction enregistre le fichier dans le bucket S3.
+    """
+    now = datetime.now()
+    now_string = now.strftime("%Y%m%d%H%M%S")
+    nom_fichier = secure_filename(request.files['monFichier'].filename)
+    cle = now_string + "_" + nom_fichier
+    s3 = boto3.resource('s3')
+    s3.Bucket(BUCKET).put_object(Key=cle, Body=request.files['monFichier'])
