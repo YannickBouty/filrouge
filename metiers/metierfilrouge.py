@@ -115,3 +115,12 @@ def enregistrer_fichier(request):
     cle = now_string + "_" + nom_fichier
     s3 = boto3.resource('s3')
     s3.Bucket(BUCKET).put_object(Key=cle, Body=request.files['monFichier'])
+
+def detection_labels(request):
+    """
+    Cette fonction permet d'appeler le service de reconnaissance d'image AWS.
+    """
+    reko = boto3.client('rekognition')
+    source_bytes = request.files['monFichier'].read()
+    response = reko.detect_labels(Image={'Bytes':source_bytes}, MaxLabels=10, MinConfidence=95)
+    return jsonify(response)

@@ -74,6 +74,19 @@ def bienvenue():
     """
     return 'Bienvenue sur le service fil rouge de Yannick !'
 
+@app.route('/detectionlabels', methods=['POST'])
+def detection_labels():
+    """
+    Ce service web permet reconnaitre des labels dans les images
+    ['jpeg','jpg','png'].
+    Returns
+    -------
+    json
+    """
+    if not authorisation_acces():
+        abort(401)
+    return controlleurs.controlleurfilrouge.controler_images(request)
+
 @app.errorhandler(401)
 @app.errorhandler(404)
 @app.errorhandler(413)

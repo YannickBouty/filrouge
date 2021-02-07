@@ -3,6 +3,7 @@ Script de contrôle du projet.
 """
 
 from werkzeug.utils import secure_filename
+from flask import abort
 import metiers.metierfilrouge
 
 # fichiers dont le contenu est affiché en clair
@@ -11,6 +12,8 @@ EXTENSIONS_DATA_BRUTES = ['csv','md','txt']
 EXTENSIONS_DATA_BASE_SOIXANTE_QUATRE = ['gif','jpeg','jpg','pdf','png']
 # fichiers authorisés
 ALLOWED_EXTENSIONS = ['csv','gif','jpeg','jpg','md','pdf','png','txt']
+# fichiers images authorisés
+ALLOWED_IMAGES = ['jpg','jpeg','png']
 # répertoire de stockage des fichiers
 UPLOAD_DIRECTORY = './uploadfiles/'
 
@@ -71,3 +74,11 @@ def aiguiller(request):
             return 'Accès autorisé mais le fichier ne porte pas une extension autorisée !\n'
     else:
         return 'Accès autorisé mais vous avez oublié le fichier en paramètre !\n'
+
+def controler_images(request):
+    fichier_envoye = request.files['monFichier']
+    nom_fichier = secure_filename(fichier_envoye.filename)
+    if not ('.' in nom_fichier and nom_fichier.rsplit('.', 1)[1].lower() \
+                    in ALLOWED_IMAGES):
+        abort(415)
+    return metiers.metierfilrouge.detection_labels(request)
