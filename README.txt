@@ -77,4 +77,5 @@ AWS ELASTIC IP
 ------------------------------------------
 	AMELIORATIONS
 ------------------------------------------
+Mettre en oeuvre un API MANAGER
 
